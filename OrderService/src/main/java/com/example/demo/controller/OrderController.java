@@ -28,15 +28,15 @@ public class OrderController {
 	@GetMapping("/callPaymentServiceThroughOrderService")
 	public ResponseEntity<String> callPaymentService() throws Exception {
 		try {
-		return new ResponseEntity<String>(restTemplate.getForObject(getBaseUrl()+"/callClienttwo", String.class),HttpStatus.OK);
+		return new ResponseEntity<String>(restTemplate.getForObject(getBaseUrl()+"/payment", String.class),HttpStatus.OK);
 		}catch(Exception e) {
-			return new ResponseEntity<String>(restTemplate.getForObject(getBaseUrl()+"/callClienttwo", String.class),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(restTemplate.getForObject(getBaseUrl()+"/payment", String.class),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
 	
 	private String getBaseUrl() {
-		ServiceInstance instance = loadBalancerClient.choose("CLIENT2"); 
+		ServiceInstance instance = loadBalancerClient.choose("paymentService"); 
 		return instance.getUri().toString();
 	}
 	
